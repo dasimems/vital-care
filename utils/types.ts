@@ -10,6 +10,7 @@ import {
   ViewProps,
   ViewStyle
 } from "react-native";
+import { SelectListProps } from "react-native-dropdown-select-list";
 import { SvgProps, TextProps } from "react-native-svg";
 
 export type FontFamiliesType = PoppinsProps;
@@ -164,4 +165,23 @@ export interface NavigationProviderTypes {
 }
 export interface UserProviderTypes {
   children: React.ReactNode;
+}
+export interface SelectBoxOptionType {
+  value: string,
+  key: string,
+  disable?: boolean
+}
+
+export interface SelectBoxType extends SelectListProps {
+  onChange: (value: string) => void,
+  data: SelectBoxOptionType[];
+  style?: ViewStyle,
+  label?: string,
+  labelStyle?: TextStyle,
+  error?: string | boolean,
+  errorStyle?: TextStyle,
+  inputParentStyle?: ViewStyle,
+  inputStyles?: TextStyle,
+  inputBorderColor?: ColorValue,
+
 }
