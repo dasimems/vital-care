@@ -1,4 +1,5 @@
 import { PoppinsProps } from "@/assets/fonts";
+import { IconProps } from "iconsax-react-native";
 import {
   ColorValue,
   ImageSourcePropType,
@@ -69,7 +70,7 @@ export interface TextComponentType extends TextProps {
   children: React.ReactNode;
   textAlign?: "left" | "right" | "center";
   fontSize?: number;
-  color?: string;
+  color?: ColorValue;
   fontFamily?: FontFamiliesType;
   style?: TextStyle;
 }
@@ -147,10 +148,12 @@ export interface ScreenStackType {
 }
 export interface ScreenNamesType {
   name: string;
-  Icon: React.FC<IconType> | undefined;
+  Icon: React.FC<IconProps> | undefined;
   label: string;
   activeNames: string[];
   showIn: string[];
+  isDoctor?: boolean;
+  patientLabel?: string;
 }
 
 export interface ActionProviderTypes {
@@ -167,21 +170,20 @@ export interface UserProviderTypes {
   children: React.ReactNode;
 }
 export interface SelectBoxOptionType {
-  value: string,
-  key: string,
-  disable?: boolean
+  value: string;
+  key: string;
+  disable?: boolean;
 }
 
 export interface SelectBoxType extends SelectListProps {
-  onChange: (value: string) => void,
+  onChange: (value: string) => void;
   data: SelectBoxOptionType[];
-  style?: ViewStyle,
-  label?: string,
-  labelStyle?: TextStyle,
-  error?: string | boolean,
-  errorStyle?: TextStyle,
-  inputParentStyle?: ViewStyle,
-  inputStyles?: TextStyle,
-  inputBorderColor?: ColorValue,
-
+  style?: ViewStyle;
+  label?: string;
+  labelStyle?: TextStyle;
+  error?: string | boolean;
+  errorStyle?: TextStyle;
+  inputParentStyle?: ViewStyle;
+  inputStyles?: TextStyle;
+  inputBorderColor?: ColorValue;
 }

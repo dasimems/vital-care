@@ -1,10 +1,9 @@
-import { StyleSheet, Text, View, useColorScheme } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 import { SelectBoxType } from "@/utils/types";
 import TextComponent from "../TextComponent";
 import { blackColor, redColor, whiteColor } from "@/assets/colors";
-import { colorSchemes } from "@/utils/_variables";
 
 const SelectBox: React.FC<SelectBoxType> = ({
   data,
@@ -21,7 +20,6 @@ const SelectBox: React.FC<SelectBoxType> = ({
   ...props
 }) => {
   const [selected, setSelected] = useState("");
-  const colorScheme = useColorScheme();
   const inputPadding = 15;
 
   useEffect(() => {
@@ -51,9 +49,7 @@ const SelectBox: React.FC<SelectBoxType> = ({
           borderWidth: 1,
           borderColor: error
             ? redColor.opacity400
-            : inputBorderColor || colorScheme === colorSchemes.dark
-            ? whiteColor.opacity200
-            : blackColor.opacity200,
+            : inputBorderColor || blackColor.opacity200,
           alignItems: "center",
           paddingVertical: 0,
           ...boxStyles

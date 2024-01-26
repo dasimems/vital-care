@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View, useColorScheme } from "react-native";
+import { StyleSheet, View } from "react-native";
 import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
 import { Poppins } from "./assets/fonts";
@@ -36,23 +36,16 @@ export default function App() {
     [Poppins.extraBold
       .italics]: require("@/assets/fonts/Poppins/Poppins-ExtraBoldItalic.ttf")
   });
-  const colorScheme = useColorScheme();
   return (
     <View
       style={{
         flex: 1,
-        backgroundColor:
-          colorScheme === colorSchemes.dark
-            ? blackColor.default
-            : whiteColor.default
+        backgroundColor: whiteColor.default
       }}
     >
       {fontsLoaded && (
         <Providers>
-          <StatusBar
-            style={colorScheme === colorSchemes.dark ? "light" : "dark"}
-            backgroundColor="transparent"
-          />
+          <StatusBar style={"dark"} backgroundColor={whiteColor.default} />
           <ScreenStacks fontLoaded={fontsLoaded} />
         </Providers>
       )}

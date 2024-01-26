@@ -50,6 +50,7 @@ const Image: React.FC<ImageType> = ({
           style={{
             width: "100%",
             height: "100%",
+            borderRadius: type === imageDimensions.round ? 90000 : borderRadius,
             ...imageStyle
           }}
         />

@@ -1,15 +1,11 @@
 import React from "react";
 import { IconType } from "@/utils/types";
-import { useColorScheme } from "react-native";
-import { colorSchemes } from "@/utils/_variables";
 import { blackColor, whiteColor } from "../colors";
 import { Path, Svg } from "react-native-svg";
 
 const CheckIcon: React.FC<IconType> = ({
   size = 20,
-  color = useColorScheme() === colorSchemes.dark
-    ? whiteColor.default
-    : blackColor.default,
+  color = blackColor.default,
   ...props
 }) => (
   <Svg width={size} height={size} viewBox="0 0 16 16" fill="none" {...props}>

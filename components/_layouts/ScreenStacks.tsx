@@ -8,6 +8,19 @@ import { useActionContext } from "@/context";
 import { ScreenNames } from "@/utils/_variables";
 import { whiteColor } from "@/assets/colors";
 import GettingStarted from "@/screens/GettingStarted";
+import Login from "@/screens/Login";
+import Register from "@/screens/Register";
+import Dashboard from "../../screens/Dashboard";
+import Patients from "@/screens/Patients";
+import Appointments from "../../screens/Appointments";
+import Chats from "../../screens/Chats";
+import ChatDetails from "@/screens/ChatDetails";
+import PatientDetails from "@/screens/PatientDetails";
+import AppointmentDetails from "@/screens/AppointmentDetails";
+import Profile from "@/screens/Profile";
+import ChangePassword from "@/screens/ChangePassword";
+import ProfileInformation from "@/screens/ProfileInformation";
+import AddDeviceId from "../../screens/AddDeviceId";
 
 const Stack = createNativeStackNavigator<any>();
 
@@ -51,6 +64,59 @@ const ScreenStacks: React.FC<ScreenStackType> = ({ fontLoaded }) => {
           <Stack.Screen
             name={ScreenNames.GettingStarted.name}
             component={GettingStarted}
+          />
+          <Stack.Screen name={ScreenNames.Login.name} component={Login} />
+          <Stack.Screen name={ScreenNames.Register.name} component={Register} />
+        </Stack.Group>
+        <Stack.Group
+          screenOptions={{
+            animation: "fade_from_bottom",
+            headerShown: false,
+            gestureEnabled: true
+          }}
+        >
+          <Stack.Screen
+            name={ScreenNames.Dashboard.name}
+            component={Dashboard}
+          />
+          <Stack.Screen name={ScreenNames.Patients.name} component={Patients} />
+          <Stack.Screen
+            name={ScreenNames.Appointments.name}
+            component={Appointments}
+          />
+          <Stack.Screen name={ScreenNames.Chats.name} component={Chats} />
+        </Stack.Group>
+        <Stack.Group
+          screenOptions={{
+            animation: "slide_from_right",
+            headerShown: false,
+            gestureEnabled: true
+          }}
+        >
+          <Stack.Screen
+            name={ScreenNames.ChatDetails.name}
+            component={ChatDetails}
+          />
+          <Stack.Screen name={ScreenNames.Profile.name} component={Profile} />
+          <Stack.Screen
+            name={ScreenNames.PatientDetails.name}
+            component={PatientDetails}
+          />
+          <Stack.Screen
+            name={ScreenNames.AppointmentDetails.name}
+            component={AppointmentDetails}
+          />
+          <Stack.Screen
+            name={ScreenNames.ChangePassword.name}
+            component={ChangePassword}
+          />
+          <Stack.Screen
+            name={ScreenNames.EditProfile.name}
+            component={ProfileInformation}
+          />
+          <Stack.Screen
+            name={ScreenNames.AddDeviceId.name}
+            component={AddDeviceId}
           />
         </Stack.Group>
       </Stack.Navigator>

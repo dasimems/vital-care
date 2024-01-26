@@ -7,8 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  ViewStyle,
-  useColorScheme
+  ViewStyle
 } from "react-native";
 import React, { forwardRef, useEffect, useState } from "react";
 import TextComponent from "../TextComponent";
@@ -73,8 +72,7 @@ const InputField = forwardRef<TextInput, InputFieldType>(
     },
     ref
   ) => {
-    const colorScheme = useColorScheme(),
-      [hidePassword, setHidePassword] = useState<boolean>(false),
+    const [hidePassword, setHidePassword] = useState<boolean>(false),
       [leftIconWidth, setLeftIconWidth] = useState<number>(0),
       [rightIconWidth, setRightIconWidth] = useState<number>(0),
       inputPadding = 15;
@@ -134,19 +132,13 @@ const InputField = forwardRef<TextInput, InputFieldType>(
               }
             }}
             ref={ref}
-            placeholderTextColor={
-              placeholderTextColor || colorScheme === colorSchemes.dark
-                ? whiteColor.opacity400
-                : blackColor.opacity400
-            }
+            placeholderTextColor={placeholderTextColor || blackColor.opacity400}
             style={{
               borderWidth: 1,
               fontSize: 15,
               borderColor: error
                 ? redColor.opacity400
-                : inputBorderColor || colorScheme === colorSchemes.dark
-                ? whiteColor.opacity200
-                : blackColor.opacity200,
+                : inputBorderColor || blackColor.opacity200,
               borderRadius: 10,
               paddingVertical: 20,
               paddingLeft: leftIcon ? 5 + leftIconWidth : inputPadding,

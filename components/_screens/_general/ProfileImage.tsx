@@ -14,6 +14,10 @@ const ProfileImage: React.FC<ProfileImageType> = ({ size }) => {
       width={size}
       height={size}
       image={AvatarImage}
+      innerPadding={0}
+      imageStyle={{
+        borderRadius: 9000
+      }}
     />
   );
 };

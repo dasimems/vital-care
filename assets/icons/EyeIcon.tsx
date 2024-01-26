@@ -1,14 +1,10 @@
 import { IconType } from "@/utils/types";
-import { colorSchemes } from "@/utils/_variables";
-import { useColorScheme } from "react-native";
 import { blackColor, whiteColor } from "../colors";
 import { Path, Svg } from "react-native-svg";
 
 const EyeIcon: React.FC<IconType> = ({
   size = 20,
-  color = useColorScheme() === colorSchemes.dark
-    ? whiteColor.default
-    : blackColor.default,
+  color = blackColor.default,
   ...props
 }) => (
   <Svg width={size} height={size} viewBox="0 0 22 22" fill="none" {...props}>
