@@ -28,7 +28,7 @@ const Button: React.FC<ButtonType> = ({
       break;
     case buttonTypes.default:
       typeStyles = {
-        backgroundColor: whiteColor.default
+        backgroundColor: blackColor.opacity200
       };
       break;
     case buttonTypes.secondary:

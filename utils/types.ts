@@ -20,6 +20,8 @@ export type VibrationTypes = "long" | "short" | "medium";
 
 export type ImageDimensionType = "round" | "square";
 
+export type MedicationStatusType = "Ongoing" | "Completed" | "Canceled";
+
 export interface ButtonType extends TouchableOpacityProps {
   children: React.ReactNode;
   disabled?: boolean;
@@ -186,4 +188,12 @@ export interface SelectBoxType extends SelectListProps {
   inputParentStyle?: ViewStyle;
   inputStyles?: TextStyle;
   inputBorderColor?: ColorValue;
+}
+
+export interface MedicationType {
+  name: string;
+  days: string;
+  morning: string;
+  night: string;
+  afternoon: string;
 }

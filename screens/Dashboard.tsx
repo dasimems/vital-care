@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import LoggedInContainer from "@/components/_layouts/LoggedInContainer";
 import TextComponent from "@/components/_general/TextComponent";
 import {
@@ -23,8 +23,12 @@ import {
   ThermometerIcon
 } from "lucide-react-native";
 import PatientList from "@/components/_screens/_general/PatientList";
+import Button from "@/components/_general/Button";
+import InputField from "@/components/_general/form/InputField";
 
 const Dashboard = () => {
+  const [showStats, setShowStats] = useState(false);
+  const [showComplaint, setShowComplaint] = useState(false);
   return (
     <LoggedInContainer
       header={
@@ -106,85 +110,148 @@ const Dashboard = () => {
             <UserCirlceAdd {...generalIconProps} color={whiteColor.default} />
           }
         />
-        <DashboardStatTwo
-          style={{
-            width: widthHalf
-          }}
-          title="Temperature"
-          icon={<ThermometerIcon {...generalIconProps} />}
-        >
-          <TextComponent fontFamily={Poppins.semiBold.default} fontSize={25}>
-            26.4°C
-          </TextComponent>
-        </DashboardStatTwo>
-        <DashboardStatTwo
-          style={{
-            width: widthHalf
-          }}
-          title="Pulse"
-          icon={<ActivityIcon {...generalIconProps} />}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              gap: 3
+
+        {showStats ? (
+          <>
+            <DashboardStatTwo
+              style={{
+                width: widthHalf
+              }}
+              title="Temperature"
+              icon={<ThermometerIcon {...generalIconProps} />}
+            >
+              <TextComponent
+                fontFamily={Poppins.semiBold.default}
+                fontSize={25}
+              >
+                26.4°C
+              </TextComponent>
+            </DashboardStatTwo>
+            <DashboardStatTwo
+              style={{
+                width: widthHalf
+              }}
+              title="Pulse"
+              icon={<ActivityIcon {...generalIconProps} />}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 3
+                }}
+              >
+                <TextComponent
+                  fontFamily={Poppins.semiBold.default}
+                  fontSize={25}
+                >
+                  56
+                </TextComponent>
+                <TextComponent>bpm</TextComponent>
+              </View>
+            </DashboardStatTwo>
+            <DashboardStatTwo
+              style={{
+                width: widthFull
+              }}
+              title="Blood Pressure"
+              icon={<HeartPulseIcon {...generalIconProps} />}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: 3
+                }}
+              >
+                <View
+                  style={{
+                    gap: 3,
+                    alignItems: "center"
+                  }}
+                >
+                  <TextComponent color={blackColor.opacity600}>
+                    Top
+                  </TextComponent>
+                  <TextComponent
+                    fontFamily={Poppins.semiBold.default}
+                    fontSize={25}
+                  >
+                    120
+                  </TextComponent>
+                </View>
+                <View
+                  style={{
+                    gap: 3,
+                    alignItems: "center"
+                  }}
+                >
+                  <TextComponent color={blackColor.opacity600}>
+                    Bottom
+                  </TextComponent>
+                  <TextComponent
+                    fontFamily={Poppins.semiBold.default}
+                    fontSize={25}
+                  >
+                    70
+                  </TextComponent>
+                </View>
+              </View>
+            </DashboardStatTwo>
+          </>
+        ) : (
+          <Button
+            action={() => {
+              setShowStats(true);
             }}
+            type="primary"
           >
-            <TextComponent fontFamily={Poppins.semiBold.default} fontSize={25}>
-              56
+            <TextComponent textAlign="center" color={whiteColor.default}>
+              Take Readings
             </TextComponent>
-            <TextComponent>bpm</TextComponent>
-          </View>
-        </DashboardStatTwo>
-        <DashboardStatTwo
-          style={{
-            width: widthFull
-          }}
-          title="Blood Pressure"
-          icon={<HeartPulseIcon {...generalIconProps} />}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-              gap: 3
-            }}
-          >
-            <View
-              style={{
-                gap: 3,
-                alignItems: "center"
-              }}
-            >
-              <TextComponent color={blackColor.opacity600}>Top</TextComponent>
-              <TextComponent
-                fontFamily={Poppins.semiBold.default}
-                fontSize={25}
-              >
-                120
-              </TextComponent>
-            </View>
-            <View
-              style={{
-                gap: 3,
-                alignItems: "center"
-              }}
-            >
-              <TextComponent color={blackColor.opacity600}>
-                Bottom
-              </TextComponent>
-              <TextComponent
-                fontFamily={Poppins.semiBold.default}
-                fontSize={25}
-              >
-                70
-              </TextComponent>
-            </View>
-          </View>
-        </DashboardStatTwo>
+          </Button>
+        )}
       </View>
+
+      {showComplaint ? (
+        <View
+          style={{
+            gap: 20
+          }}
+        >
+          <InputField
+            multiline
+            inputStyle={{
+              textAlignVertical: "top",
+              height: 100
+            }}
+            label="Make a complaint"
+            placeholder="type your complaint here...."
+          />
+          <Button
+            action={() => {
+              setShowComplaint(false);
+            }}
+            type="primary"
+          >
+            <TextComponent textAlign="center" color={whiteColor.default}>
+              Submit
+            </TextComponent>
+          </Button>
+        </View>
+      ) : (
+        <Button
+          action={() => {
+            setShowComplaint(true);
+          }}
+          type="primary"
+        >
+          <TextComponent textAlign="center" color={whiteColor.default}>
+            Make a complaint
+          </TextComponent>
+        </Button>
+      )}
       <PatientList max={5} />
     </LoggedInContainer>
   );

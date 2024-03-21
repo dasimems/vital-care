@@ -21,6 +21,9 @@ import Profile from "@/screens/Profile";
 import ChangePassword from "@/screens/ChangePassword";
 import ProfileInformation from "@/screens/ProfileInformation";
 import AddDeviceId from "../../screens/AddDeviceId";
+import Medications from "@/screens/Medications";
+import Complaints from "@/screens/Complaints";
+import MedicationDetails from "@/screens/MedicationDetails";
 
 const Stack = createNativeStackNavigator<any>();
 
@@ -98,6 +101,18 @@ const ScreenStacks: React.FC<ScreenStackType> = ({ fontLoaded }) => {
             component={ChatDetails}
           />
           <Stack.Screen name={ScreenNames.Profile.name} component={Profile} />
+          <Stack.Screen
+            name={ScreenNames.MedicationDetails.name}
+            component={MedicationDetails}
+          />
+          <Stack.Screen
+            name={ScreenNames.Records.name}
+            component={Medications}
+          />
+          <Stack.Screen
+            name={ScreenNames.Complaints.name}
+            component={Complaints}
+          />
           <Stack.Screen
             name={ScreenNames.PatientDetails.name}
             component={PatientDetails}

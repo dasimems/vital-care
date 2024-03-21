@@ -72,6 +72,7 @@ const LoggedInContainer: React.FC<{
   unScrollable?: boolean;
   unSafeView?: boolean;
   hideHeaderText?: boolean;
+  buttonContent?: React.ReactNode;
 }> = ({
   hideHeader,
   hideNav,
@@ -83,7 +84,8 @@ const LoggedInContainer: React.FC<{
   children,
   unScrollable,
   unSafeView,
-  hideHeaderText
+  hideHeaderText,
+  buttonContent
 }) => {
   const [activeScreen, setActiveScreen] = useState<ScreenNamesType | null>(
       null
@@ -138,6 +140,8 @@ const LoggedInContainer: React.FC<{
           </ScrollComponent>
         )}
       </View>
+
+      {buttonContent}
 
       {!hideNav && <Nav />}
     </Container>

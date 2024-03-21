@@ -127,6 +127,27 @@ export const padding = 20,
       activeNames: ["Profile"],
       showIn: []
     },
+    Records: {
+      name: "Records",
+      Icon: Message,
+      label: "Records",
+      activeNames: ["Records"],
+      showIn: []
+    },
+    MedicationDetails: {
+      name: "MedicationDetails",
+      Icon: Message,
+      label: "Medication Details",
+      activeNames: ["MedicationDetails"],
+      showIn: []
+    },
+    Complaints: {
+      name: "Complaints",
+      Icon: Message,
+      label: "Complaints",
+      activeNames: ["Complaints"],
+      showIn: []
+    },
     AddDeviceId: {
       name: "AddDeviceId",
       Icon: Message,

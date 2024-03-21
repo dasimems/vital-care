@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React from "react";
+import React, { useMemo, useState } from "react";
 import LoggedInContainer from "@/components/_layouts/LoggedInContainer";
 import {
   ScreenNames,
@@ -13,6 +13,7 @@ import {
   ActivityIcon,
   HeartPulseIcon,
   PillIcon,
+  Tablets,
   ThermometerIcon
 } from "lucide-react-native";
 import TextComponent from "@/components/_general/TextComponent";
@@ -21,13 +22,26 @@ import { blackColor, primaryColor } from "@/assets/colors";
 import MedicationCard from "@/components/_screens/patient-details/MedicationCard";
 import Image from "@/components/_general/Image";
 import { AvatarImage } from "@/assets/images";
-import { Message } from "iconsax-react-native";
+import { Add, Message } from "iconsax-react-native";
 import { useNavigation } from "@react-navigation/native";
 import Button from "@/components/_general/Button";
 import { whiteColor } from "../assets/colors";
+import InputField from "@/components/_general/form/InputField";
+import { MedicationType } from "@/utils/types";
 
 const PatientDetails = () => {
+  const medicationInitialValue: MedicationType = useMemo(
+    () => ({
+      name: "",
+      days: "",
+      morning: "0",
+      night: "0",
+      afternoon: "0"
+    }),
+    []
+  );
   const { navigate } = useNavigation();
+  const [medicationForm, setMedicationForm] = useState<MedicationType[]>([]);
   return (
     <LoggedInContainer
       hideHeaderText
@@ -93,6 +107,37 @@ const PatientDetails = () => {
         >
           <Message {...generalIconProps} size={30} />
         </TouchableOpacity>
+      </View>
+
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          gap: 20
+        }}
+      >
+        <Button
+          action={() => {
+            navigate(ScreenNames.Records.name as never);
+          }}
+          type="default"
+          style={{
+            ...styles.buttonStyle
+          }}
+        >
+          <TextComponent>Records</TextComponent>
+        </Button>
+        <Button
+          action={() => {
+            navigate(ScreenNames.Complaints.name as never);
+          }}
+          type="primary"
+          style={{
+            ...styles.buttonStyle
+          }}
+        >
+          <TextComponent color={whiteColor.default}>Complaints</TextComponent>
+        </Button>
       </View>
       <Button
         type="primary"
@@ -196,12 +241,151 @@ const PatientDetails = () => {
           gap: 20
         }}
       >
+        <InputField
+          multiline
+          inputStyle={{
+            textAlignVertical: "top",
+            height: 100
+          }}
+          label="Write a comment"
+          placeholder="Comment here"
+        />
+        {medicationForm.map(
+          ({ afternoon, days, morning, name, night }, index) => (
+            <View
+              key={index}
+              style={{
+                gap: 10
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "stretch",
+                  gap: 10
+                }}
+              >
+                <InputField
+                  label="Medicine"
+                  value={name}
+                  placeholder="Medicine name"
+                  style={{
+                    flex: 0.7
+                  }}
+                />
+                <InputField
+                  label="Days"
+                  inputMode="numeric"
+                  keyboardType="number-pad"
+                  value={days}
+                  placeholder="E.G 3"
+                  style={{
+                    flex: 0.3
+                  }}
+                />
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "stretch",
+                  gap: 10
+                }}
+              >
+                <InputField
+                  label="Morning"
+                  leftIcon={
+                    <Tablets
+                      {...generalIconProps}
+                      color={primaryColor.default}
+                    />
+                  }
+                  inputMode="numeric"
+                  keyboardType="number-pad"
+                  style={{
+                    ...styles.medicationTimeStyle
+                  }}
+                  placeholder=""
+                  value={morning}
+                />
+                <InputField
+                  label="Afternoon"
+                  leftIcon={
+                    <Tablets
+                      {...generalIconProps}
+                      color={primaryColor.default}
+                    />
+                  }
+                  inputMode="numeric"
+                  keyboardType="number-pad"
+                  style={{
+                    ...styles.medicationTimeStyle
+                  }}
+                  placeholder=""
+                  value={afternoon}
+                />
+                <InputField
+                  label="Night"
+                  leftIcon={
+                    <Tablets
+                      {...generalIconProps}
+                      color={primaryColor.default}
+                    />
+                  }
+                  inputMode="numeric"
+                  keyboardType="number-pad"
+                  style={{
+                    ...styles.medicationTimeStyle
+                  }}
+                  placeholder=""
+                  value={night}
+                />
+              </View>
+            </View>
+          )
+        )}
+        <Button
+          action={() => {
+            setMedicationForm((prevState) => [
+              ...prevState,
+              medicationInitialValue
+            ]);
+          }}
+          style={{
+            borderWidth: 1,
+            borderStyle: "dashed",
+            borderColor: blackColor.opacity500,
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        >
+          <Add {...generalIconProps} />
+          <TextComponent>Add medication</TextComponent>
+        </Button>
+        <Button
+          type="primary"
+          style={{
+            alignItems: "center"
+          }}
+        >
+          <TextComponent textAlign="center" color={whiteColor.default}>
+            Submit
+          </TextComponent>
+        </Button>
+      </View>
+      <View
+        style={{
+          gap: 20
+        }}
+      >
         <TextComponent fontFamily={Poppins.semiBold.default}>
           Medications
         </TextComponent>
         {new Array(3).fill(0).map((_, index) => (
           <MedicationCard
             key={index}
+            status="Ongoing"
             name="Paracetamol"
             morning={2}
             afternoon={0}
@@ -215,4 +399,13 @@ const PatientDetails = () => {
 
 export default PatientDetails;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  buttonStyle: {
+    width: "auto",
+    flex: 1 / 2,
+    alignItems: "center"
+  },
+  medicationTimeStyle: {
+    flex: 1 / 3
+  }
+});
