@@ -16,10 +16,12 @@ export interface SetPinBodyType {
 }
 
 export interface UserDetailsType {
-  userID?: string;
-  userType?: string;
-  expiredAt?: Date;
-  profile_image?: string;
+  email: string;
+  role: string;
+  name: string;
+  id: string;
+  createdAt: number;
+  updatedAt: number;
 }
 export interface LoginResponseType extends UserDetailsType {
   token?: string;

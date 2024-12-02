@@ -1,6 +1,7 @@
 import { LayoutChangeEvent, Vibration } from "react-native";
 import { VibrationTypes } from "./types";
 import { vibrationLengths } from "./_variables";
+import Toast, { ToastOptions } from "react-native-root-toast";
 
 export const backspaceText: (
   text: string,
@@ -78,4 +79,13 @@ export const formatSeconds = (sec: number) => {
     }
   }
   return `${formatedSec}${secType}`;
+};
+
+export const showToast = (message: string, options?: ToastOptions): void => {
+  Toast.show(message, {
+    position: Toast.positions.TOP,
+    animation: true,
+    hideOnPress: true,
+    ...options
+  });
 };

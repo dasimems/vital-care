@@ -154,8 +154,8 @@ export interface ScreenNamesType {
   label: string;
   activeNames: string[];
   showIn: string[];
-  isDoctor?: boolean;
   patientLabel?: string;
+  hideIf?: string[];
 }
 
 export interface ActionProviderTypes {

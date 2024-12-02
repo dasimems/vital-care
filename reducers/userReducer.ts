@@ -1,5 +1,6 @@
 import { UserDetailsType } from "@/api/index.d";
 import { SET_USER_DETAILS, SET_USER_TOKEN, UserType } from "@/utils/_enums";
+import { User } from "firebase/auth";
 
 export interface InitialValueType {
   userDetails: UserDetailsType | null;

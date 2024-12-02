@@ -3,23 +3,33 @@ import React from "react";
 import { ScreenNamesType } from "@/utils/types";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import TextComponent from "../TextComponent";
-import { generalIconProps } from "@/utils/_variables";
+import { generalIconProps, roles } from "@/utils/_variables";
 import { blackColor, primaryColor, whiteColor } from "@/assets/colors";
+import useUser from "@/hooks/useUser";
 
 const NavButton: React.FC<ScreenNamesType> = ({
   Icon,
   name,
   label,
-  activeNames
+  activeNames,
+  hideIf,
+  patientLabel
 }) => {
+  const { userDetails } = useUser();
   const { name: screenName } = useRoute();
   const { navigate } = useNavigation();
+  const shouldHideButton =
+    userDetails?.role && hideIf && hideIf?.includes(userDetails?.role);
 
   let isActive = screenName === name;
   const activeIconSize = 35;
+  const isPatient = userDetails?.role === roles.patient?.toLowerCase();
 
   if (!isActive) {
     isActive = activeNames.includes(screenName);
+  }
+  if (shouldHideButton) {
+    return null;
   }
   return (
     <TouchableOpacity
@@ -55,7 +65,7 @@ const NavButton: React.FC<ScreenNamesType> = ({
         textAlign="center"
         style={{}}
       >
-        {label}
+        {isPatient ? patientLabel ?? label : label}
       </TextComponent>
     </TouchableOpacity>
   );

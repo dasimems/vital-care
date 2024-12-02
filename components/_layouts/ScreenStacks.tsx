@@ -24,6 +24,7 @@ import AddDeviceId from "../../screens/AddDeviceId";
 import Medications from "@/screens/Medications";
 import Complaints from "@/screens/Complaints";
 import MedicationDetails from "@/screens/MedicationDetails";
+import useUser from "@/hooks/useUser";
 
 const Stack = createNativeStackNavigator<any>();
 
@@ -37,8 +38,10 @@ const MyTheme = {
 
 const ScreenStacks: React.FC<ScreenStackType> = ({ fontLoaded }) => {
   const { getColorScheme } = useActionContext();
+  const { getUserDetails, userDetails } = useUser();
   const showAppScreens = useCallback(async () => {
     if (fontLoaded) {
+      await getUserDetails();
       await SplashScreen.hideAsync();
     }
   }, [fontLoaded]);
@@ -57,20 +60,27 @@ const ScreenStacks: React.FC<ScreenStackType> = ({ fontLoaded }) => {
     <NavigationContainer theme={MyTheme}>
       <Stack.Navigator initialRouteName={ScreenNames.GettingStarted.name}>
         {/*screens that shows when user isn't loggedin yet */}
-        <Stack.Group
-          screenOptions={{
-            animation: "slide_from_right",
-            headerShown: false,
-            gestureEnabled: true
-          }}
-        >
-          <Stack.Screen
-            name={ScreenNames.GettingStarted.name}
-            component={GettingStarted}
-          />
-          <Stack.Screen name={ScreenNames.Login.name} component={Login} />
-          <Stack.Screen name={ScreenNames.Register.name} component={Register} />
-        </Stack.Group>
+        {!userDetails && (
+          <Stack.Group
+            screenOptions={{
+              animation: "slide_from_right",
+              headerShown: false,
+              gestureEnabled: true
+            }}
+          >
+            <Stack.Screen
+              name={ScreenNames.GettingStarted.name}
+              component={GettingStarted}
+            />
+            <Stack.Screen name={ScreenNames.Login.name} component={Login} />
+            <Stack.Screen
+              name={ScreenNames.Register.name}
+              component={Register}
+            />
+          </Stack.Group>
+        )}
+        {userDetails && <>
+        
         <Stack.Group
           screenOptions={{
             animation: "fade_from_bottom",
@@ -134,6 +144,7 @@ const ScreenStacks: React.FC<ScreenStackType> = ({ fontLoaded }) => {
             component={AddDeviceId}
           />
         </Stack.Group>
+        </>}
       </Stack.Navigator>
     </NavigationContainer>
   );

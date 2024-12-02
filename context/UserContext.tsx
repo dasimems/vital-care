@@ -13,6 +13,7 @@ import { InitialValueType } from "@/reducers/userReducer";
 import { UserDetailsType } from "@/api/index.d";
 import { setHeaderAuthorization } from "@/api";
 import { saveUserToken } from "@/localServices/function";
+import { User } from "firebase/auth";
 
 interface UserContextFunctionTypes {
   setToken: (payload?: string) => void;

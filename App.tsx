@@ -7,6 +7,7 @@ import { colorSchemes } from "./utils/_variables";
 import { blackColor, whiteColor } from "./assets/colors";
 import Providers from "./components/_layouts/Providers";
 import ScreenStacks from "./components/_layouts/ScreenStacks";
+import { RootSiblingParent } from "react-native-root-siblings";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -37,19 +38,21 @@ export default function App() {
       .italics]: require("@/assets/fonts/Poppins/Poppins-ExtraBoldItalic.ttf")
   });
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: whiteColor.default
-      }}
-    >
-      {fontsLoaded && (
-        <Providers>
-          <StatusBar style={"dark"} backgroundColor={whiteColor.default} />
-          <ScreenStacks fontLoaded={fontsLoaded} />
-        </Providers>
-      )}
-    </View>
+    <RootSiblingParent>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: whiteColor.default
+        }}
+      >
+        {fontsLoaded && (
+          <Providers>
+            <StatusBar style={"dark"} backgroundColor={whiteColor.default} />
+            <ScreenStacks fontLoaded={fontsLoaded} />
+          </Providers>
+        )}
+      </View>
+    </RootSiblingParent>
   );
 }
 

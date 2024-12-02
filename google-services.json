@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "77835911918",
+    "project_id": "vital-care-8fc35",
+    "storage_bucket": "vital-care-8fc35.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:77835911918:android:e13466b8ae476fe4a429ff",
+        "android_client_info": {
+          "package_name": "com.vital.care"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-lEwFj577prAIUQ2MUiVCgyUTBppL02I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -82,7 +82,15 @@ export const padding = 20,
       label: "Patients",
       activeNames: ["Patients"],
       showIn: [nav],
-      isDoctor: true
+      hideIf: ["patient"]
+    },
+    Medications: {
+      name: "Medications",
+      Icon: UserCirlceAdd,
+      label: "Medications",
+      activeNames: ["Medications"],
+      showIn: [nav],
+      hideIf: ["doctor"]
     },
     Appointments: {
       name: "Appointments",
@@ -177,6 +185,15 @@ export const padding = 20,
       showIn: [profile]
     }
   },
+  databaseKeys = {
+    users: "Users",
+    chats: "Chats"
+  },
+  roles = {
+    doctor: "Doctor",
+    patient: "Patient"
+  },
+  userRoles = convertObjectToArray(roles),
   allScreenNames = convertObjectToArray(ScreenNames),
   navRoutes = allScreenNames.filter((screenName) =>
     screenName.showIn.includes(nav)

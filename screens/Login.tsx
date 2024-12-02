@@ -1,12 +1,18 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React from "react";
+import React, { useCallback, useState } from "react";
 import Container from "@/components/_layouts/Container";
 import InputField from "@/components/_general/form/InputField";
 import { LoginImage } from "@/assets/images";
 import TextComponent from "@/components/_general/TextComponent";
-import { blackColor, primaryColor, whiteColor } from "@/assets/colors";
+import {
+  blackColor,
+  primaryColor,
+  redColor,
+  whiteColor
+} from "@/assets/colors";
 import {
   ScreenNames,
+  databaseKeys,
   padding,
   windowHeight,
   windowWidth
@@ -15,9 +21,59 @@ import Button from "@/components/_general/Button";
 import ScrollComponent from "@/components/_general/ScrollComponent";
 import { useNavigation } from "@react-navigation/native";
 import { Poppins } from "@/assets/fonts";
+import { Controller, useForm } from "react-hook-form";
+import { emailRegExp, passwordRegExp } from "@/utils/regex";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth, fireStoreDb } from "@/api/firebase";
+import { showToast } from "@/utils/functions";
+import { useUserContext } from "@/context";
+import { doc, getDoc } from "firebase/firestore";
+import { UserDetailsType } from "@/api/index.d";
+
+type LoginBodyType = {
+  email: string;
+  password: string;
+};
+
+const defaultValues: LoginBodyType = {
+  email: "",
+  password: ""
+};
 
 const Login = () => {
   const { navigate } = useNavigation();
+  const { setUserDetails } = useUserContext();
+  const [error, setError] = useState<string | null>(null);
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting }
+  } = useForm({
+    defaultValues
+  });
+  const loginUser = useCallback(async (data: LoginBodyType) => {
+    const { email, password } = data;
+    setError(null);
+    try {
+      const { user } = await signInWithEmailAndPassword(auth, email, password);
+      const userRef = doc(fireStoreDb, databaseKeys.users, user.uid);
+      const docSnap = await getDoc(userRef);
+
+      if (docSnap.exists()) {
+        const data = docSnap.data() as UserDetailsType;
+        setUserDetails(data);
+        showToast("Login successful");
+      } else {
+        user.delete();
+        throw {
+          message: "User not found!"
+        };
+      }
+    } catch (error: any) {
+      showToast(error?.message ?? "Error encountered whilst login in.");
+      setError(error?.message ?? "Error encountered whilst login in.");
+    }
+  }, []);
   return (
     <Container safeView style={{}}>
       <ScrollComponent
@@ -59,8 +115,59 @@ const Login = () => {
             gap: 20
           }}
         >
-          <InputField placeholder="Email Address" />
-          <InputField secureTextEntry placeholder="Password" />
+          {error && (
+            <View
+              style={{
+                backgroundColor: redColor.opacity100,
+                padding: 15,
+                borderRadius: 15,
+                paddingHorizontal: 20
+              }}
+            >
+              <TextComponent color={redColor.default}>{error}</TextComponent>
+            </View>
+          )}
+          <Controller
+            control={control}
+            name="email"
+            render={({
+              field: { ref, onChange, value },
+              fieldState: { error }
+            }) => (
+              <InputField
+                placeholder="Email Address"
+                ref={ref}
+                inputMode="email"
+                keyboardType="email-address"
+                value={value}
+                onChangeText={onChange}
+                error={error?.message}
+              />
+            )}
+            rules={{
+              required: "Please provide your email address"
+            }}
+          />
+          <Controller
+            control={control}
+            name="password"
+            render={({
+              field: { ref, onChange, value },
+              fieldState: { error }
+            }) => (
+              <InputField
+                secureTextEntry
+                placeholder="Password"
+                ref={ref}
+                value={value}
+                onChangeText={onChange}
+                error={error?.message}
+              />
+            )}
+            rules={{
+              required: "Please provide your email address"
+            }}
+          />
           <View
             style={{
               flexDirection: "row",
@@ -74,9 +181,8 @@ const Login = () => {
             </TouchableOpacity>
           </View>
           <Button
-            action={() => {
-              navigate(ScreenNames.Dashboard.name as never);
-            }}
+            loading={isSubmitting}
+            action={handleSubmit(loginUser)}
             style={{
               alignItems: "center"
             }}

@@ -7,6 +7,7 @@ import DoctorImageTwo from "./doctor-2.jpg";
 import LoginImage from "./login-image.jpg";
 import AppointmentImage from "./appointment.png";
 import PatientsImage from "./patient.png";
+import MedicationImage from "./medication-image.png";
 
 export {
   LoadingOne,
@@ -17,5 +18,6 @@ export {
   DoctorImageTwo,
   LoginImage,
   AppointmentImage,
-  PatientsImage
+  PatientsImage,
+  MedicationImage
 };
